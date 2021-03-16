@@ -1,11 +1,12 @@
 <?php
-
-echo "Chọn 1: Để nhập danh sách sinh viên."."\n";
-echo "Chọn 2: Để hiển thị danh sách sinh viên."."\n";
-echo "Chọn 3: Để tìm kiếm sinh viên theo tên."."\n";
-echo "chọn 4: Để UPDATE"."\n";
-echo "chọn 5: EXIT"."\n";
-
+function menu()
+{
+    echo "Chọn 1: Để nhập danh sách sinh viên." . "\n";
+    echo "Chọn 2: Để hiển thị danh sách sinh viên." . "\n";
+    echo "Chọn 3: Để tìm kiếm sinh viên theo tên." . "\n";
+    echo "chọn 4: Để UPDATE" . "\n";
+    echo "chọn 5: EXIT" . "\n";
+}
 function khaibao(){
     $file=file_get_contents('data.json');
     $data = json_decode($file, true);
@@ -63,23 +64,29 @@ function timkiem(){
 function update(){
     $jsonString = file_get_contents('data.json');
     $data = json_decode($jsonString, true);//chyen doi du lieu
-
-    $data[0]['Name'] = "Hieu";
-    $data[2]['Class'] = "Lop 20";//Update lai activity_name =Tennis//Update lai activity_name =Tennis
+    $name=(String)readLine("Nhập tên người cần thay đổi: ");
+    $data0['Name'] = (String)readLine("Nhập tên mới: ");
+    $data0['Age']  = (int)readLine("Nhập tuổi mới: ");
+    $data0['Class']= (String)readLine("Nhập lớp mới: ");//Update lai activity_name =Tennis//Update lai activity_name =Tennis
     foreach ($data as $key => $entry) {//vong lap ,lap lai gia tri $entry o vi tri key
-        if ($entry['Age'] == '21') { // $key ==1 => FOOTBAllS==TENNIS
-            $data[$key]['Name'] = "Hieu";
-            $data[$key]['Class'] = "Lop 20";
+        if ($entry['Name'] == $name) { // $key ==1 => FOOTBAllS==TENNIS
+            $data[$key] = $data0;
+
         }
     }
     $newJsonString = json_encode($data);//ma hoa gia tri sang dinh dang json
+
     file_put_contents('data.json', $newJsonString); // dua tap tin vao
     chon();
 }
 function chon()
-{
+{   $i="";
+    if($i==null){
+        var_dump(menu());
+    }
     $chon = (int)readline ('Mời bạn chọn :')."<br />";
     switch ($chon) {
+
         case 1:
             khaibao();
             break;
