@@ -6,6 +6,7 @@ function menu()
     echo "Chọn 3: Để tìm kiếm sinh viên theo tên." . "\n";
     echo "chọn 4: Để UPDATE" . "\n";
     echo "chọn 5: EXIT" . "\n";
+   
 }
 function khaibao(){
     $file=file_get_contents('data.json');
@@ -37,34 +38,49 @@ function danhsach(){
     $content = file_get_contents('data.json');
     var_dump(json_decode($content));
     var_dump(json_decode($content,true));
+    
     chon();
 }
 function timkiem(){
-    $name = (String)readline("Nhập tên cho sinh viên : ");
+    
+   
     $content = file_get_contents('data.json');
     $objitems = json_decode($content,true);
+    retry:
+    $name = (String)readline("Nhập tên cho sinh viên : ");
     //var_dump(json_decode($content));
     foreach($objitems as $key=>$student){
-
-//        die();
         if($name == $student['Name']) {
-            echo 'Kết quả là';
-            var_dump($student);
+            echo "Kết quả là : \n";
+            print_r($student);
+            break;
+
+        }else{
+            echo "Không tìm thấy !Mời bạn nhập lại.\n";
+            goto retry;
         }
 //        }
-        //  var_dump(json_decode($student));
-
-
     }
-
-
+    
     chon();
 
 }
 function update(){
     $jsonString = file_get_contents('data.json');
     $data = json_decode($jsonString, true);//chyen doi du lieu
+    retry:
     $name=(String)readLine("Nhập tên người cần thay đổi: ");
+    foreach($data as $key=>$student){
+        if($name == $student['Name']) {
+            echo 'Kết quả là :' ;
+            print_r($student);
+            break;
+        }else {
+            echo "Không tìm thấy!Mời nhập lại. \n";
+            goto retry;
+        }
+    }
+    
     $data0['Name'] = (String)readLine("Nhập tên mới: ");
     $data0['Age']  = (int)readLine("Nhập tuổi mới: ");
     $data0['Class']= (String)readLine("Nhập lớp mới: ");//Update lai activity_name =Tennis//Update lai activity_name =Tennis
@@ -74,9 +90,11 @@ function update(){
 
         }
     }
+   
     $newJsonString = json_encode($data);//ma hoa gia tri sang dinh dang json
 
     file_put_contents('data.json', $newJsonString); // dua tap tin vao
+    
     chon();
 }
 function chon()
