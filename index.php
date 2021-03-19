@@ -8,7 +8,7 @@ function menu()
     echo "chọn 5: EXIT" . "\n";
    
 }
-function khaibao(){
+function inputInfor(){
     $file=file_get_contents('data.json');
     $data = json_decode($file, true);
     do {
@@ -32,16 +32,16 @@ function khaibao(){
     $myfile = fopen('data.json','w');// mở file
     fwrite($myfile,json_encode($data));
     fclose($myfile);
-    chon();
+    click();
 }
-function danhsach(){
+function showInfor(){
     $content = file_get_contents('data.json');
     var_dump(json_decode($content));
     var_dump(json_decode($content,true));
     
-    chon();
+    click();
 }
-function timkiem(){
+function search(){
     
    
     $content = file_get_contents('data.json');
@@ -52,7 +52,7 @@ function timkiem(){
     foreach($objitems as $key=>$student){
         if($name == $student['Name']) {
             echo "Kết quả là : \n";
-            print_r($student);
+            var_dump($student);
             break;
 
         }else{
@@ -62,7 +62,7 @@ function timkiem(){
 //        }
     }
     
-    chon();
+    click();
 
 }
 function update(){
@@ -73,7 +73,7 @@ function update(){
     foreach($data as $key=>$student){
         if($name == $student['Name']) {
             echo 'Kết quả là :' ;
-            print_r($student);
+            var_dump($student);
             break;
         }else {
             echo "Không tìm thấy!Mời nhập lại. \n";
@@ -81,12 +81,12 @@ function update(){
         }
     }
     
-    $data0['Name'] = (String)readLine("Nhập tên mới: ");
-    $data0['Age']  = (int)readLine("Nhập tuổi mới: ");
-    $data0['Class']= (String)readLine("Nhập lớp mới: ");//Update lai activity_name =Tennis//Update lai activity_name =Tennis
+    $input['Name'] = (String)readLine("Nhập tên mới: ");
+    $input['Age']  = (int)readLine("Nhập tuổi mới: ");
+    $input['Class']= (String)readLine("Nhập lớp mới: ");//Update lai activity_name =Tennis//Update lai activity_name =Tennis
     foreach ($data as $key => $entry) {//vong lap ,lap lai gia tri $entry o vi tri key
         if ($entry['Name'] == $name) { // $key ==1 => FOOTBAllS==TENNIS
-            $data[$key] = $data0;
+            $data[$key] = $input;
 
         }
     }
@@ -95,24 +95,21 @@ function update(){
 
     file_put_contents('data.json', $newJsonString); // dua tap tin vao
     
-    chon();
+    click();
 }
-function chon()
-{   $i="";
-    if($i==null){
-        var_dump(menu());
-    }
-    $chon = (int)readline ('Mời bạn chọn :')."<br />";
-    switch ($chon) {
+function click()
+{   menu();
+    $click = (int)readline ('Mời bạn chọn :');
+    switch ($click) {
 
         case 1:
-            khaibao();
+            inputInfor();
             break;
         case 2:
-            danhsach();
+            showInfor();
             break;
         case 3:
-            timkiem();
+            search();
             break;
         case 4:
             update();
@@ -121,7 +118,7 @@ function chon()
             die();
         default :
             echo "Sai cú pháp , Mời thử lại"."\n";
-            chon();
+            click();
     }
 }
-chon();
+click();
