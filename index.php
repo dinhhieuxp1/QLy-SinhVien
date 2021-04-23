@@ -122,3 +122,4 @@ function click()
     }
 }
 click();
+echo "Xin Chao Hieu!";
